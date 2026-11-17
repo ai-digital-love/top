@@ -33,10 +33,31 @@
       overflow-x: hidden; /* 横スクロールを絶対に発生させない */
     }
 
+    /* 画像の長押し保存・選択・ドラッグ防止 */
     img {
       display: block;
       width: 100%;
       height: auto;
+      -webkit-touch-callout: none; /* iOS Safari 長押しメニュー無効化 */
+      -webkit-user-select: none;   /* Safari 選択無効化 */
+      user-select: none;           /* 標準 選択無効化 */
+      pointer-events: none;        /* 画像本体への直接タッチ・クリックを無効化 */
+    }
+
+    /* 画像を囲む枠に透明な保護レイヤーを被せる */
+    .img-protect {
+      position: relative;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .img-protect::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: transparent;
     }
 
     a {
@@ -374,6 +395,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       padding: 3px 8px;
+      z-index: 6; /* 保護レイヤーより上に表示 */
     }
 
     /* =========================================
@@ -541,7 +563,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      z-index: 10;
+      z-index: 20;
     }
 
     .modal-image {
@@ -581,8 +603,8 @@
          1. ヘッダー
          ========================================= -->
     <header class="header">
-      <!-- ▼ クリエイター名（ロゴ）を書き換えてください -->
-      <a href="#" class="logo">CREATOR NAME</a>
+      <!-- ▼ クリエイター名（ロゴ） -->
+      <a href="#" class="logo">ai_digitallove / Djd official web</a>
 
       <!-- ハンバーガーボタン -->
       <button class="hamburger" id="hamburgerBtn" aria-label="メニューを開く">
@@ -606,13 +628,13 @@
            2. ヒーローエリア（ファーストビュー）
            ========================================= -->
       <section class="hero">
-        <div class="hero-visual">
-          <!-- ▼ メインビジュアル画像（img/ フォルダ内のファイル名に変更してください） -->
-          <img src="./img/hero-visual.png" alt="Main Visual">
+        <div class="hero-visual img-protect">
+          <!-- ▼ メインビジュアル画像（.webp） -->
+          <img src="./img/hero-visual.webp" alt="Main Visual">
         </div>
 
         <h1 class="hero-copy">DIGITAL ARCHIVE &amp; AI VISUALS</h1>
-        <p class="hero-subcopy">AI Art / Short Film / Character Design</p>
+        <p class="hero-subcopy">AI Art / Short Film / DTM Music</p>
 
         <!-- ▼ メインのInstagramアカウントURL -->
         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="btn-primary">
@@ -626,14 +648,17 @@
       <section id="about" class="fade-in">
         <h2 class="section-title">ABOUT</h2>
         <div class="about-content">
-          <div class="about-avatar">
-            <!-- ▼ アイコン画像（img/ フォルダ内のファイル名に変更してください） -->
-            <img src="./img/avatar.jpg" alt="Creator Icon">
+          <div class="about-avatar img-protect">
+            <!-- ▼ アイコン画像（.webp） -->
+            <img src="./img/avatar.webp" alt="Creator Icon">
           </div>
-          <p class="about-name">CREATOR NAME</p>
+          <p class="about-name">ai_digitallove / Djd</p>
           <p class="about-text">
-            画像生成AI・動画生成AIを用いて、クールで洗練されたキャラクタービジュアルやショートムービーを制作しています。<br>
-            Instagramを中心に不定期で作品を公開中。
+            AI（ComfyUI）が生み出す独自の空気感やストリートな世界観、ありそうな日常の一コマをを記録していくデジタルアーカイブ。<br>
+            Instagramを中心にほぼ毎日作品を公開中。<br>
+            それ以外にDTM & DJで音楽やったりやらなかったり。<br>好きなもの：ラーメン🍜とUplifting Trance🎧<br><br>
+
+            A digital archive documenting the unique atmosphere, street-style worldview, and everyday moments created by AI (ComfyUI). Works are published almost daily, primarily on Instagram. In addition, I sometimes make music using DTM & DJ.<br>Favorite things: Ramen🍜 and Uplifting Trance🎧
           </p>
         </div>
       </section>
@@ -646,36 +671,36 @@
         <div class="works-grid">
 
           <!-- 作品1 -->
-          <div class="work-item"
-               data-title="01 / NOCTURNE"
-               data-desc="深夜の都市をテーマに制作したビジュアル作品。光と影のコントラストを意識して生成しました。"
-               data-img="./img/work-1.jpg">
-            <img src="./img/work-1.jpg" alt="Work 01">
+          <div class="work-item img-protect"
+               data-title="LAZY GRACE"
+               data-desc="Date 2026/11/13"
+               data-img="./img/work-1.webp">
+            <img src="./img/work-1.webp" alt="Work 01">
           </div>
 
           <!-- 作品2 -->
-          <div class="work-item"
-               data-title="02 / SILENT MOTION"
-               data-desc="Instagram Reels向けに制作したショート動画のキービジュアル。繊細なカメラワークと表情の変化を表現しています。"
-               data-img="./img/work-2.jpg">
-            <span class="work-badge">REEL</span>
-            <img src="./img/work-2.jpg" alt="Work 02">
+          <div class="work-item img-protect"
+               data-title="RAW ELEGANCE"
+               data-desc="Date 2026/10/13"
+               data-img="./img/work-2.webp">
+               <!-- <span class="work-badge">REEL</span> -->
+            <img src="./img/work-2.webp" alt="Work 02">
           </div>
 
           <!-- 作品3 -->
-          <div class="work-item"
-               data-title="03 / MONOCHROME"
-               data-desc="ファッション誌のルックブックをイメージしたポートレートシリーズの一枚。"
-               data-img="./img/work-3.jpg">
-            <img src="./img/work-3.jpg" alt="Work 03">
+          <div class="work-item img-protect"
+               data-title="PASTEL SHADOW"
+               data-desc="Date 2026/10/19"
+               data-img="./img/work-3.webp">
+            <img src="./img/work-3.webp" alt="Work 03">
           </div>
 
           <!-- 作品4 -->
-          <div class="work-item"
-               data-title="04 / ECLIPSE"
-               data-desc="質感とライティングのディテールを追求した実験作。細部のライティング調整を重ねて仕上げました。"
-               data-img="./img/work-4.jpg">
-            <img src="./img/work-4.jpg" alt="Work 04">
+          <div class="work-item img-protect"
+               data-title="Pastel Ground"
+               data-desc="Date 2026/11/09"
+               data-img="./img/work-4.webp">
+            <img src="./img/work-4.webp" alt="Work 04">
           </div>
 
         </div>
@@ -687,14 +712,14 @@
       <section id="wallpaper" class="fade-in">
         <h2 class="section-title">WALLPAPER</h2>
         <div class="wallpaper-wrapper">
-          <div class="wallpaper-preview">
-            <!-- ▼ 壁紙プレビュー画像 -->
+          <!-- プレビュー自体は長押し保護し、下のDOWNLOADボタンからのみ保存させる仕様 -->
+          <div class="wallpaper-preview img-protect">
             <img src="./img/wallpaper.jpg" alt="Monthly Wallpaper">
           </div>
           <p class="wallpaper-caption">今月の限定スマホ壁紙（個人利用のみ可）</p>
 
-          <!-- ▼ 高画質壁紙のファイル名（またはURL）を指定してください -->
-          <a href="./img/wallpaper-hd.jpg"
+          <!-- ▼ 高画質壁紙のファイル名を指定してください -->
+          <a href="./img/wallpaper.jpg"
              download="wallpaper.jpg"
              target="_blank"
              rel="noopener noreferrer"
@@ -754,7 +779,7 @@
          8. フッター
          ========================================= -->
     <footer class="footer">
-      <p class="copyright">&copy; 2026 CREATOR NAME All Rights Reserved.</p>
+      <p class="copyright">&copy; 2026 ai_digitallove / Djd All Rights Reserved.</p>
     </footer>
 
   </div>
@@ -765,7 +790,7 @@
   <div class="modal" id="workModal">
     <div class="modal-content">
       <button class="modal-close" id="modalCloseBtn" aria-label="閉じる">&times;</button>
-      <div class="modal-image">
+      <div class="modal-image img-protect">
         <img id="modalImg" src="" alt="Expanded Work">
       </div>
       <h3 class="modal-title" id="modalTitle"></h3>
@@ -774,7 +799,7 @@
   </div>
 
   <!-- =========================================
-       JavaScript（メニュー・モーダル・スクロール演出）
+       JavaScript（メニュー・モーダル・スクロール演出・画像保護）
        ========================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -842,6 +867,13 @@
       });
 
       fadeElements.forEach(el => observer.observe(el));
+
+      /* 4. 画像保護（コンテキストメニュー・ドラッグ無効化） */
+      const protectedAreas = document.querySelectorAll('.img-protect, img');
+      protectedAreas.forEach(el => {
+        el.addEventListener('contextmenu', (e) => e.preventDefault());
+        el.addEventListener('dragstart', (e) => e.preventDefault());
+      });
     });
   </script>
 </body>
