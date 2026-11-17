@@ -1,38 +1,426 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KAIZEN | AI Creator Hub</title>
+    
+    <!-- Google Fontsの読み込み (Montserrat & Noto Sans JP) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSSの読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0A0A0A',
+                        cardBg: '#121212',
+                        subText: '#A0A0A0',
+                        borderCol: '#222222',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
+        /* PC閲覧時に中央にスマホ幅（最大480px）で表示するためのスタイル */
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        .phone-container {
+            max-width: 480px;
+            width: 100%;
+            min-height: 100vh;
             margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
+            background-color: #0A0A0A;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
         }
-        h1 {
-            color: #333;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 10px;
+
+        /* カスタムスクロールバーの非表示（すっきりした見栄えのため） */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
         }
-        .section {
-            margin: 20px 0;
+
+        /* スクロール連動フェードインアニメーション用の初期状態 */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body>
-    <h1>Welcome to My Website</h1>
-    
-    <div class="section">
-        <h2>About</h2>
-        <p>こちらにサイトの説明を記載してください。</p>
+<body class="bg-black flex justify-center">
+
+    <!-- スマートフォン表示フレームコンテナ -->
+    <div class="phone-container bg-darkBg text-white flex flex-col min-h-screen">
+
+        <!-- ==========================================
+             1. ヘッダーセクション
+             ========================================== -->
+        <header class="sticky top-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-borderCol px-5 py-4 flex items-center justify-between">
+            <!-- クリエイター名（ロゴ） -->
+            <a href="#" class="font-bold tracking-widest text-lg uppercase">KAIZEN</a>
+            
+            <!-- ハンバーガーメニューボタン（高さ44px以上を確保） -->
+            <button id="menu-btn" aria-label="メニューを開く" class="w-11 h-11 flex flex-col justify-center items-center focus:outline-none z-50">
+                <span id="bar1" class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out mb-1.5"></span>
+                <span id="bar2" class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out mb-1.5"></span>
+                <span id="bar3" class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+            </button>
+        </header>
+
+        <!-- フルスクリーン・ナビゲーションメニュー -->
+        <div id="mobile-menu" class="fixed inset-0 bg-darkBg/98 z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+            <nav class="flex flex-col space-y-6 text-center text-xl font-medium tracking-widest">
+                <a href="#about" class="nav-link text-subText hover:text-white transition-colors py-2">ABOUT</a>
+                <a href="#works" class="nav-link text-subText hover:text-white transition-colors py-2">WORKS</a>
+                <a href="#wallpaper" class="nav-link text-subText hover:text-white transition-colors py-2">WALLPAPER</a>
+                <a href="#shop" class="nav-link text-subText hover:text-white transition-colors py-2">SHOP</a>
+                <a href="#sns" class="nav-link text-subText hover:text-white transition-colors py-2">SNS</a>
+            </nav>
+        </div>
+
+        <main class="flex-grow">
+            <!-- ==========================================
+                 2. ヒーローエリア（ファーストビュー）
+                 ========================================== -->
+            <section class="px-5 pt-8 pb-12 flex flex-col items-center text-center fade-in-section">
+                <!-- メインビジュアル（縦長ダミー画像） -->
+                <div class="w-full aspect-[4/5] rounded-xl overflow-hidden border border-borderCol mb-6 relative shadow-2xl">
+                    <img src="https://placehold.co/600x750/161616/FFFFFF?text=AI+Visual+Art" alt="Hero Visual" class="w-full h-full object-cover">
+                </div>
+                
+                <!-- 英字キャッチコピー -->
+                <h1 class="text-2xl font-bold tracking-wider mb-2">EXPLORE THE UNKNOWN</h1>
+                <p class="text-subText text-sm mb-6 font-light leading-relaxed">
+                    AI-generated worlds and moving imaginations.<br>Blending technology with cinematic aesthetics.
+                </p>
+                
+                <!-- Instagramへの目立つリンクボタン（高さ44px以上） -->
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-full h-12 bg-white text-black font-semibold rounded-lg flex items-center justify-center space-x-2 tracking-wider transition-opacity hover:opacity-90 active:scale-[0.99]">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <span>FOLLOW ON INSTAGRAM</span>
+                </a>
+            </section>
+
+            <!-- ==========================================
+                 3. ABOUT セクション
+                 ========================================== -->
+            <section id="about" class="px-5 py-10 border-t border-borderCol fade-in-section">
+                <h2 class="text-xs uppercase tracking-widest text-subText mb-4">01. ABOUT</h2>
+                <div class="flex items-center space-x-4 mb-4">
+                    <!-- アイコン画像 -->
+                    <div class="w-16 h-16 rounded-full overflow-hidden border border-borderCol flex-shrink-0">
+                        <img src="https://placehold.co/200x200/1a1a1a/FFFFFF?text=Avatar" alt="Creator Avatar" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">KAIZEN</h3>
+                        <p class="text-xs text-subText">AI Visual Creator / Prompt Engineer</p>
+                    </div>
+                </div>
+                <!-- 3〜4行のプロフィール文 -->
+                <p class="text-sm text-subText font-light leading-relaxed">
+                    最新の生成AIモデルを活用し、現実と幻想が交差する独自のビジュアル世界を構築。広告的な美しさとエモーショナルなストーリーテリングを融合させた作品を日々Instagramにて発信中。
+                </p>
+            </section>
+
+            <!-- ==========================================
+                 4. WORKS セクション
+                 ========================================== -->
+            <section id="works" class="px-5 py-10 border-t border-borderCol fade-in-section">
+                <h2 class="text-xs uppercase tracking-widest text-subText mb-4">02. WORKS</h2>
+                <p class="text-sm text-subText font-light mb-6">タップして詳細・コメントを表示</p>
+                
+                <!-- 作品一覧グリッド（2列） -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- 作品1 -->
+                    <div class="work-item group cursor-pointer relative aspect-square rounded-lg overflow-hidden border border-borderCol bg-card"
+                         data-title="Cybernetic Echo"
+                         data-desc="サイバーパンクの夜景をモチーフに、AI特有の流麗な光の表現を追求した動画作品のワンシーン。"
+                         data-img="https://placehold.co/600x600/161616/FFFFFF?text=Work+01">
+                        <img src="https://placehold.co/400x400/161616/FFFFFF?text=Work+01" alt="Work 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                            <span class="text-xs font-medium tracking-wider">Cybernetic Echo</span>
+                        </div>
+                    </div>
+                    <!-- 作品2 -->
+                    <div class="work-item group cursor-pointer relative aspect-square rounded-lg overflow-hidden border border-borderCol bg-card"
+                         data-title="Silent Monolith"
+                         data-desc="広大な砂漠に佇む謎の巨大建造物。静寂とスケール感をテーマにMidjourneyで生成。"
+                         data-img="https://placehold.co/600x600/161616/FFFFFF?text=Work+02">
+                        <img src="https://placehold.co/400x400/161616/FFFFFF?text=Work+02" alt="Work 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                            <span class="text-xs font-medium tracking-wider">Silent Monolith</span>
+                        </div>
+                    </div>
+                    <!-- 作品3 -->
+                    <div class="work-item group cursor-pointer relative aspect-square rounded-lg overflow-hidden border border-borderCol bg-card"
+                         data-title="Neon Genesis"
+                         data-desc="未来都市のネオンサインと雨粒のリアリティを極限まで高めたシネマティックポートレート。"
+                         data-img="https://placehold.co/600x600/161616/FFFFFF?text=Work+03">
+                        <img src="https://placehold.co/400x400/161616/FFFFFF?text=Work+03" alt="Work 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                            <span class="text-xs font-medium tracking-wider">Neon Genesis</span>
+                        </div>
+                    </div>
+                    <!-- 作品4 -->
+                    <div class="work-item group cursor-pointer relative aspect-square rounded-lg overflow-hidden border border-borderCol bg-card"
+                         data-title="Ether Garden"
+                         data-desc="現実には存在しない植物が生い茂る幻想的なボタニカル・スペース。柔らかな色彩が特徴。"
+                         data-img="https://placehold.co/600x600/161616/FFFFFF?text=Work+04">
+                        <img src="https://placehold.co/400x400/161616/FFFFFF?text=Work+04" alt="Work 4" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                            <span class="text-xs font-medium tracking-wider">Ether Garden</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 5. WALLPAPER セクション
+                 ========================================== -->
+            <section id="wallpaper" class="px-5 py-10 border-t border-borderCol fade-in-section">
+                <h2 class="text-xs uppercase tracking-widest text-subText mb-2">03. WALLPAPER</h2>
+                <p class="text-sm text-subText font-light mb-6">月替わりの無料スマホ用壁紙を配信中</p>
+                
+                <div class="flex flex-col items-center bg-cardBg border border-borderCol p-4 rounded-xl">
+                    <!-- 9:16比率のプレビュー画像 -->
+                    <div class="w-1/2 aspect-[9/16] rounded-lg overflow-hidden border border-borderCol mb-4 shadow-lg">
+                        <img id="wallpaper-img" src="https://placehold.co/540x960/161616/FFFFFF?text=Monthly+Wallpaper" alt="Monthly Wallpaper" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-xs text-subText mb-4 text-center">"Midnight Gradient" (2026.03 Edition)</p>
+                    
+                    <!-- DOWNLOADボタン（高さ44px以上） -->
+                    <a id="download-btn" href="https://placehold.co/1080x1920/161616/FFFFFF?text=Wallpaper+HighRes" target="_blank" download class="w-full h-11 bg-transparent border border-white text-white font-medium rounded-lg flex items-center justify-center space-x-2 tracking-wider text-sm transition-colors hover:bg-white hover:text-black">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                        <span>DOWNLOAD (9:16)</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 6. SHOP セクション（準備中）
+                 ========================================== -->
+            <!-- 
+                【将来の手順】
+                1. aタグの `href="#"` を実際のSUZURIやBOOTHのURLに変更してください。
+                2. `pointer-events-none opacity-50` クラスを削除し、必要に応じてボタンのデザインを調整してください。
+            -->
+            <section id="shop" class="px-5 py-10 border-t border-borderCol fade-in-section">
+                <h2 class="text-xs uppercase tracking-widest text-subText mb-2">04. SHOP</h2>
+                <p class="text-sm text-subText font-light mb-6">オリジナルグッズ・素材の販売</p>
+                
+                <div class="bg-cardBg border border-borderCol p-6 rounded-xl text-center">
+                    <p class="text-xs tracking-widest text-subText uppercase mb-3">COMING SOON</p>
+                    <p class="text-sm text-subText font-light mb-6">
+                        現在、オリジナルグッズやデジタルアセットの販売ショップを準備中です。公開まで今しばらくお待ちください。
+                    </p>
+                    <!-- グレーアウトされた非アクティブボタン -->
+                    <a href="#" class="w-full h-11 bg-[#1A1A1A] text-subText border border-borderCol font-medium rounded-lg flex items-center justify-center tracking-wider text-sm pointer-events-none opacity-50 cursor-not-allowed" aria-disabled="true">
+                        VISIT SHOP
+                    </a>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 7. SNS セクション
+                 ========================================== -->
+            <section id="sns" class="px-5 py-10 border-t border-borderCol fade-in-section">
+                <h2 class="text-xs uppercase tracking-widest text-subText mb-4">05. SNS</h2>
+                <p class="text-sm text-subText font-light mb-6">各種SNSで最新情報をチェック</p>
+                
+                <!-- リスト型リンク（HTMLの行をコピペするだけで簡単に追加可能） -->
+                <div class="flex flex-col space-y-3">
+                    <!-- Instagram -->
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-full h-12 bg-cardBg border border-borderCol hover:border-white/50 px-4 rounded-lg flex items-center justify-between transition-colors">
+                        <span class="font-medium text-sm tracking-wider">Instagram</span>
+                        <span class="text-subText text-xs">@creator_account</span>
+                    </a>
+                    <!-- X (Twitter) -->
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="w-full h-12 bg-cardBg border border-borderCol hover:border-white/50 px-4 rounded-lg flex items-center justify-between transition-colors">
+                        <span class="font-medium text-sm tracking-wider">X (Twitter)</span>
+                        <span class="text-subText text-xs">@creator_account</span>
+                    </a>
+                    <!-- YouTube -->
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-full h-12 bg-cardBg border border-borderCol hover:border-white/50 px-4 rounded-lg flex items-center justify-between transition-colors">
+                        <span class="font-medium text-sm tracking-wider">YouTube</span>
+                        <span class="text-subText text-xs">Channel</span>
+                    </a>
+                    <!-- [拡張用テンプレート] 新しくSNSを増やす場合は下の行をコピーしてください
+                    <a href="URL_HERE" target="_blank" rel="noopener noreferrer" class="w-full h-12 bg-cardBg border border-borderCol hover:border-white/50 px-4 rounded-lg flex items-center justify-between transition-colors">
+                        <span class="font-medium text-sm tracking-wider">Platform Name</span>
+                        <span class="text-subText text-xs">Account / ID</span>
+                    </a>
+                    -->
+                </div>
+            </section>
+        </main>
+
+        <!-- ==========================================
+             8. フッターセクション
+             ========================================== -->
+        <footer class="px-5 py-8 border-t border-borderCol text-center text-xs text-subText">
+            <p>&copy; 2026 KAIZEN All Rights Reserved.</p>
+        </footer>
+
+    </div> <!-- /.phone-container -->
+
+    <!-- ==========================================
+         WORKS 拡大モーダルウィンドウ
+         ========================================== -->
+    <div id="modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="relative max-w-sm w-full bg-cardBg border border-borderCol rounded-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300" id="modal-content">
+            <!-- 閉じるボタン（高さ44px以上確保） -->
+            <button id="modal-close" class="absolute top-3 right-3 w-11 h-11 bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white z-10 hover:bg-black transition-colors" aria-label="閉じる">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            
+            <!-- モーダル用画像 -->
+            <div class="w-full aspect-square bg-black">
+                <img id="modal-img" src="" alt="Modal Image" class="w-full h-full object-cover">
+            </div>
+            
+            <!-- モーダル用テキスト情報 -->
+            <div class="p-5">
+                <h3 id="modal-title" class="font-bold text-lg mb-2"></h3>
+                <p id="modal-desc" class="text-xs text-subText font-light leading-relaxed"></p>
+            </div>
+        </div>
     </div>
 
-    <div class="section">
-        <h2>Contact</h2>
-        <p>連絡先情報があれば記載してください。</p>
-    </div>
+    <!-- ==========================================
+         JavaScript によるインタラクション実装
+         ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* --- 1. ハンバーガーメニューの開閉処理 --- */
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.contains('opacity-0');
+                if (isOpen) {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                    // ハンバーガーアイコンを「×」に変形
+                    bar1.style.transform = 'translateY(8px) rotate(45deg)';
+                    bar2.style.opacity = '0';
+                    bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
+                    document.body.style.overflow = 'hidden'; // 背景スクロール固定
+                } else {
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    // アイコンを元に戻す
+                    bar1.style.transform = 'none';
+                    bar2.style.opacity = '1';
+                    bar3.style.transform = 'none';
+                    document.body.style.overflow = '';
+                }
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+
+            // メニュー内のリンクをクリックしたら自動でメニューを閉じる
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('opacity-0')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+
+            /* --- 2. WORKS 作品モーダル表示処理 --- */
+            const workItems = document.querySelectorAll('.work-item');
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalClose = document.getElementById('modal-close');
+
+            workItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.getAttribute('data-title');
+                    const desc = item.getAttribute('data-desc');
+                    const imgSrc = item.getAttribute('data-img');
+
+                    modalTitle.textContent = title;
+                    modalDesc.textContent = desc;
+                    modalImg.src = imgSrc;
+
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            function closeModal() {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                document.body.style.overflow = '';
+            }
+
+            modalClose.addEventListener('click', closeModal);
+            
+            // モーダルの背景タップで閉じる
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+
+            /* --- 3. スクロール連動のフェードイン演出 --- */
+            const fadeSections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // 一度表示されたら監視を終了
+                    }
+                });
+            }, observerOptions);
+
+            fadeSections.forEach(section => {
+                observer.observe(section);
+            });
+
+        });
+    </script>
 </body>
 </html>
